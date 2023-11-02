@@ -19,4 +19,4 @@ async def pageHome():
 
 @app.route("/invite")
 async def redirectInvite():
-    return await redirect('https://discord.com/api/oauth2/authorize?client_id=1168950370580578385&permissions=0&scope=applications.commands%20bot')
+    return redirect('https://discord.com/api/oauth2/authorize?client_id=1168950370580578385&permissions=0&scope=applications.commands%20bot', code=301)
