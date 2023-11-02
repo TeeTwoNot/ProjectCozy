@@ -18,5 +18,5 @@ async def pageHome():
     return await render_template('index.html')
 
 @app.route("/invite")
-async def pageHome():
+async def redirectInvite():
     return await redirect('https://discord.com/api/oauth2/authorize?client_id=1168950370580578385&permissions=0&scope=applications.commands%20bot')
