@@ -122,7 +122,7 @@ async def status_task():
     amount = len(bot.guilds)
     while True:
         await bot.change_presence(
-            activity = discord.Game(name="sample")
+            activity = discord.Game(name="Among Us")
             )
         await asyncio.sleep(120)
         await bot.change_presence(
