@@ -18,23 +18,26 @@ NASA_TOKEN = os.environ["NASA_TOKEN"]
 
 cache = CacheBackend(expire_after=timedelta(seconds=120))
 
-#COG CLASS
+
+# COG CLASS
 class Fun(commands.Cog):
     def __init__(self, bot: commands.Bot) -> None:
         self.bot = bot
+        self.main_color = 0x572A17
+        self.main_color = 0xF5F5EF
         self.discord_version = discord.__version__
         self.platform = platform.python_version()
         self.user_agent = f"Project Cozy/1.0 (discord.py {self.discord_version}; +https://projectcozy.xyz)"
 
-    #COZYSTUFF COMMAND
+    # COZYSTUFF COMMAND
     @app_commands.command(name="cozystuff", description="Cozy stuff on Reddit!")
     @app_commands.checks.cooldown(1, 5.0)
     async def cozystuff(self, interaction: discord.Interaction) -> None:
         await interaction.response.defer()
         subreddit = [
-            'https://www.reddit.com/r/cozy/new.json?limit=100',
-            'https://www.reddit.com/r/cozyplaces/new.json?limit=100'
-        ] 
+            "https://www.reddit.com/r/cozy/new.json?limit=100",
+            "https://www.reddit.com/r/cozyplaces/new.json?limit=100",
+        ]
 
         async with CachedSession(cache=cache) as session:
             async with session.get(random.choice(subreddit)) as reddit:
@@ -54,26 +57,34 @@ class Fun(commands.Cog):
                 permalink = random_post["data"]["permalink"]
                 title = random_post["data"]["title"]
                 subreddit_title = random_post["data"]["subreddit"]
-                embed = discord.Embed(title=f"{title}", description="", url=f"https://reddit.com{permalink}", color=0xeb6123)
+                embed = discord.Embed(
+                    title=f"{title}",
+                    description="",
+                    url=f"https://reddit.com{permalink}",
+                    color=self.main_color,
+                )
                 embed.set_image(url=image_url)
                 embed.set_footer(text=f"By r/{subreddit_title}")
                 await interaction.followup.send(embed=embed)
 
     @cozystuff.error
-    async def meme_error(self, interaction: discord.Interaction, error: AppCommandError) -> None:
+    async def meme_error(
+        self, interaction: discord.Interaction, error: AppCommandError
+    ) -> None:
         if isinstance(error, app_commands.CommandOnCooldown):
             unixtime = int(time.time())
             totaltime = unixtime + int(error.retry_after)
             embed = discord.Embed(
                 title="Slow down!",
                 description=f"You can use this command again <t:{totaltime}:R>",
-                color=0xb40000
+                color=self.main_color,
             )
             await interaction.response.send_message(embed=embed, ephemeral=True)
 
-    
-    #ADVICE SLIP COMMAND
-    @app_commands.command(name="advice", description="Get useful advice! By adviceslip.com")
+    # ADVICE SLIP COMMAND
+    @app_commands.command(
+        name="advice", description="Get useful advice! By adviceslip.com"
+    )
     @app_commands.checks.cooldown(1, 5.0)
     async def advice(self, interaction: discord.Interaction):
         url = "https://api.adviceslip.com/advice"
@@ -82,22 +93,26 @@ class Fun(commands.Cog):
             async with session.get(url, headers=headers) as response:
                 answer = json.loads(await response.text())
                 await interaction.response.send_message(f"{answer['slip']['advice']}")
-    
+
     @advice.error
-    async def advice_error(self, interaction: discord.Interaction, error: AppCommandError) -> None:
+    async def advice_error(
+        self, interaction: discord.Interaction, error: AppCommandError
+    ) -> None:
         if isinstance(error, app_commands.CommandOnCooldown):
             unixtime = int(time.time())
             totaltime = unixtime + int(error.retry_after)
             embed = discord.Embed(
                 title="Slow down!",
                 description=f"You can use this command again <t:{totaltime}:R>",
-                color=0xb40000
+                color=self.main_color,
             )
             await interaction.response.send_message(embed=embed, ephemeral=True)
 
-
-    #APOD COMMAND
-    @app_commands.command(name="astronomy", description="Do you find astronomy cool? This command is for you!")
+    # APOD COMMAND
+    @app_commands.command(
+        name="astronomy",
+        description="Do you find astronomy cool? This command is for you!",
+    )
     @app_commands.checks.cooldown(1, 10.0)
     async def astronomy(self, interaction: discord.Interaction):
         url = f"https://api.nasa.gov/planetary/apod?api_key={NASA_TOKEN}"
@@ -105,21 +120,27 @@ class Fun(commands.Cog):
         async with aiohttp.ClientSession() as session:
             async with session.get(url, headers=headers) as response:
                 answer = json.loads(await response.text())
-                image_url = answer['hdurl']
-                embed = discord.Embed(title=f"{answer['title']}", description="", color=0xb40000)
+                image_url = answer["hdurl"]
+                embed = discord.Embed(
+                    title=f"Photo of the Day: {answer['title']}",
+                    description="",
+                    color=self.main_color,
+                )
                 embed.set_image(url=image_url)
                 embed.set_footer(text=f"Date: {answer['date']}")
                 await interaction.response.send_message(embed=embed)
-    
+
     @astronomy.error
-    async def apod_error(self, interaction: discord.Interaction, error: AppCommandError) -> None:
+    async def apod_error(
+        self, interaction: discord.Interaction, error: AppCommandError
+    ) -> None:
         if isinstance(error, app_commands.CommandOnCooldown):
             unixtime = int(time.time())
             totaltime = unixtime + int(error.retry_after)
             embed = discord.Embed(
                 title="Slow down!",
                 description=f"You can use this command again <t:{totaltime}:R>",
-                color=0xb40000
+                color=self.main_color,
             )
             await interaction.response.send_message(embed=embed, ephemeral=True)
 
