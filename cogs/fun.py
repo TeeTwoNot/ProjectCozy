@@ -30,6 +30,7 @@ class Fun(commands.Cog):
     @app_commands.command(name="cozystuff", description="Cozy stuff on Reddit!")
     @app_commands.checks.cooldown(1, 5.0)
     async def cozystuff(self, interaction: discord.Interaction) -> None:
+        await interaction.response.defer()
         subreddit = [
             'https://www.reddit.com/r/cozy/new.json?limit=100',
             'https://www.reddit.com/r/cozyplaces/new.json?limit=100'
