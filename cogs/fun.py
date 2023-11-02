@@ -25,10 +25,10 @@ class Fun(commands.Cog):
         self.platform = platform.python_version()
         self.user_agent = f"Project Cozy/1.0 (discord.py {self.discord_version}; +https://projectcozy.xyz)"
 
-    #COZYPLACES COMMAND
-    @app_commands.command(name="cozyplaces", description="Cozy places on Reddit!")
+    #COZYSTUFF COMMAND
+    @app_commands.command(name="cozystuff", description="Cozy stuff on Reddit!")
     @app_commands.checks.cooldown(1, 5.0)
-    async def cozyplaces(self, interaction: discord.Interaction) -> None:
+    async def cozystuff(self, interaction: discord.Interaction) -> None:
         subreddit = [
             'https://www.reddit.com/r/cozyplaces/new.json?limit=100'
         ] 
