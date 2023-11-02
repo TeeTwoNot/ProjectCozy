@@ -10,7 +10,8 @@ from discord import app_commands
 from discord.ext import commands
 from discord.app_commands import AppCommandError
 from datetime import timedelta
-from aiohttp_client_cache import CachedSession, CacheBackend
+from aiohttp_client_cache import CacheBackend
+from aiohttp_client_cache.session import CachedSession
 from re import search
 
 NASA_TOKEN = os.environ["NASA_TOKEN"]
