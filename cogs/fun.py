@@ -57,7 +57,7 @@ class Fun(commands.Cog):
                 embed.set_footer(text=f"By r/{subreddit_title}")
                 await interaction.followup.send(embed=embed)
 
-    @cozyplaces.error
+    @cozystuff.error
     async def meme_error(self, interaction: discord.Interaction, error: AppCommandError) -> None:
         if isinstance(error, app_commands.CommandOnCooldown):
             unixtime = int(time.time())
