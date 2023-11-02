@@ -155,15 +155,15 @@ class Fun(commands.Cog):
         headers = {"User-Agent": self.user_agent}
         async with aiohttp.ClientSession() as session:
             async with session.get(url, headers=headers) as response:
-                answer = json.loads(await response.text())
-                image_url = answer["hdurl"]
+                jsonresp = json.loads(await response.text())
+                image_url = jsonresp["file"]
                 embed = discord.Embed(
-                    title=f"Photo of the Day: {answer['title']}",
+                    title=f"Coffee!",
                     description="",
                     color=self.main_color,
                 )
                 embed.set_image(url=image_url)
-                embed.set_footer(text=f"Date: {answer['date']}")
+                embed.set_footer(text=f"By coffee.alexflipnote.dev")
                 await interaction.response.send_message(embed=embed)
 
     @coffee.error
