@@ -222,6 +222,42 @@ class Fun(commands.Cog):
             )
             await interaction.response.send_message(embed=embed, ephemeral=True)
 
+    
+    # BORED COMMAND
+    @app_commands.command(
+        name="bored", description="Cure your boredom instantly!"
+    )
+    @app_commands.checks.cooldown(1, 5.0)
+    async def bored(self, interaction: discord.Interaction):
+        await interaction.response.defer()
+        url = f"https://www.boredapi.com/api/activity/"
+        headers = {"User-Agent": self.user_agent}
+        async with aiohttp.ClientSession() as session:
+            async with session.get(url, headers=headers) as response:
+                jsonresp = json.loads(await response.text())
+                answer = jsonresp["activity"]
+                embed = discord.Embed(
+                    title="Bored? Try this:",
+                    description=answer,
+                    color=self.main_color,
+                )
+                embed.set_footer(text=f"By boredapi.com")
+                await interaction.followup.send(embed=embed)
+
+    @bored.error
+    async def bored_error(
+        self, interaction: discord.Interaction, error: AppCommandError
+    ) -> None:
+        if isinstance(error, app_commands.CommandOnCooldown):
+            unixtime = int(time.time())
+            totaltime = unixtime + int(error.retry_after)
+            embed = discord.Embed(
+                title="Slow down!",
+                description=f"You can use this command again <t:{totaltime}:R>",
+                color=self.main_color,
+            )
+            await interaction.response.send_message(embed=embed, ephemeral=True)
+
 
 async def setup(bot):
     await bot.add_cog(Fun(bot))
