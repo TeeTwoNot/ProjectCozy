@@ -158,7 +158,7 @@ class Fun(commands.Cog):
                 jsonresp = json.loads(await response.text())
                 image_url = jsonresp["file"]
                 embed = discord.Embed(
-                    title=f"Coffee!",
+                    title=random.choice(lists.coffeequotes),
                     description="",
                     color=self.main_color,
                 )
