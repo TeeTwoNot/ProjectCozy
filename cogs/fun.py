@@ -5,6 +5,7 @@ import os
 import platform
 import time
 import json
+import random
 
 from discord import app_commands
 from discord.ext import commands
@@ -13,6 +14,7 @@ from datetime import timedelta
 from aiohttp_client_cache import CacheBackend
 from aiohttp_client_cache.session import CachedSession
 from re import search
+from components import lists
 
 NASA_TOKEN = os.environ["NASA_TOKEN"]
 
