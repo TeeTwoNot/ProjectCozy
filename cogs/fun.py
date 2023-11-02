@@ -17,6 +17,7 @@ from re import search
 from components import lists
 
 NASA_TOKEN = os.environ["NASA_TOKEN"]
+CAT_TOKEN = os.environ["CAT_TOKEN"]
 
 cache = CacheBackend(expire_after=timedelta(seconds=120))
 
@@ -149,7 +150,7 @@ class Fun(commands.Cog):
 
     # COFFEE COMMAND
     @app_commands.command(
-        name="coffee", description="Pictures of coffee!"
+        name="coffee", description="Pictures of coffee! Very soothing!"
     )
     @app_commands.checks.cooldown(1, 5.0)
     async def coffee(self, interaction: discord.Interaction):
@@ -171,6 +172,44 @@ class Fun(commands.Cog):
 
     @coffee.error
     async def coffee_error(
+        self, interaction: discord.Interaction, error: AppCommandError
+    ) -> None:
+        if isinstance(error, app_commands.CommandOnCooldown):
+            unixtime = int(time.time())
+            totaltime = unixtime + int(error.retry_after)
+            embed = discord.Embed(
+                title="Slow down!",
+                description=f"You can use this command again <t:{totaltime}:R>",
+                color=self.main_color,
+            )
+            await interaction.response.send_message(embed=embed, ephemeral=True)
+    
+
+    # CATS COMMAND
+    @app_commands.command(
+        name="cats", description="Pictures of cats! They are indeed very adorable."
+    )
+    @app_commands.checks.cooldown(1, 5.0)
+    async def cats(self, interaction: discord.Interaction):
+        await interaction.response.defer()
+        url = f"https://api.thecatapi.com/v1/images/search?api_key={CAT_TOKEN}"
+        headers = {"User-Agent": self.user_agent}
+        async with aiohttp.ClientSession() as session:
+            async with session.get(url, headers=headers) as response:
+                jsonresp = json.loads(await response.text())
+                print(jsonresp)
+                image_url = jsonresp[0]["url"]
+                embed = discord.Embed(
+                    title=random.choice(lists.catquotes),
+                    description="",
+                    color=self.main_color,
+                )
+                embed.set_image(url=image_url)
+                embed.set_footer(text=f"By thecatapi.com")
+                await interaction.followup.send(embed=embed)
+
+    @cats.error
+    async def cats_error(
         self, interaction: discord.Interaction, error: AppCommandError
     ) -> None:
         if isinstance(error, app_commands.CommandOnCooldown):
