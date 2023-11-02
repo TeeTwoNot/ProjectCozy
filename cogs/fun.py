@@ -151,6 +151,7 @@ class Fun(commands.Cog):
     )
     @app_commands.checks.cooldown(1, 5.0)
     async def coffee(self, interaction: discord.Interaction):
+        await interaction.response.defer()
         url = f"https://coffee.alexflipnote.dev/random.json"
         headers = {"User-Agent": self.user_agent}
         async with aiohttp.ClientSession() as session:
@@ -164,7 +165,7 @@ class Fun(commands.Cog):
                 )
                 embed.set_image(url=image_url)
                 embed.set_footer(text=f"By coffee.alexflipnote.dev")
-                await interaction.response.send_message(embed=embed)
+                await interaction.followup.send(embed=embed)
 
     @coffee.error
     async def coffee_error(
