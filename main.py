@@ -46,9 +46,8 @@ root.addHandler(handler)
 logging.getLogger('hypercorn.access').setLevel(logging.ERROR)
 
 #DOTENV
-APP_ID : Final[str] = os.environ['APP_ID']
 DISCORD_TOKEN : Final[str] = os.environ['DISCORD_TOKEN']
-TOPGG_TOKEN : Final[str] = os.environ['TOPGG_TOKEN']
+#TOPGG_TOKEN : Final[str] = os.environ['TOPGG_TOKEN']
 
 #HYPERCORN CONFIG
 config = Config()
