@@ -96,7 +96,7 @@ class Fun(commands.Cog):
     #APOD COMMAND
     @app_commands.command(name="astronomy", description="Do you find astronomy cool? This command is for you!")
     @app_commands.checks.cooldown(1, 10.0)
-    async def astronomy(self, interaction: discord.Interaction, *, hd: bool = False):
+    async def astronomy(self, interaction: discord.Interaction):
         url = f"https://api.nasa.gov/planetary/apod?api_key={NASA_TOKEN}"
         headers = {"Accept": "text/plain", "User-Agent": self.user_agent}
         async with aiohttp.ClientSession() as session:
