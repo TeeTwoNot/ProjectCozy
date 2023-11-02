@@ -26,7 +26,7 @@ class Fun(commands.Cog):
         self.user_agent = f"Project Cozy/1.0 (discord.py {self.discord_version}; +https://projectcozy.xyz)"
 
     #COZYPLACES COMMAND
-    @app_commands.command(name="cozyplaces", description="Fresh memes just for you!")
+    @app_commands.command(name="cozyplaces", description="Cozy places on Reddit!")
     @app_commands.checks.cooldown(1, 5.0)
     async def cozyplaces(self, interaction: discord.Interaction) -> None:
         subreddit = [
