@@ -9,3 +9,9 @@ coffeequotes = [
     "Who doesn't like coffee?",
     "It's coffee time!"
 ]
+
+catquotes = [
+    "It's a cat!",
+    "So adorable!",
+    "Meow :3"
+]
