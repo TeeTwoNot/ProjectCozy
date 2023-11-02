@@ -27,7 +27,7 @@ class Fun(commands.Cog):
     def __init__(self, bot: commands.Bot) -> None:
         self.bot = bot
         self.main_color = 0x572A17
-        self.main_color = 0xF5F5EF
+        self.secondary_color = 0xF5F5EF
         self.discord_version = discord.__version__
         self.platform = platform.python_version()
         self.user_agent = f"Project Cozy/1.0 (discord.py {self.discord_version}; +https://projectcozy.xyz)"
@@ -197,7 +197,6 @@ class Fun(commands.Cog):
         async with aiohttp.ClientSession() as session:
             async with session.get(url, headers=headers) as response:
                 jsonresp = json.loads(await response.text())
-                print(jsonresp)
                 image_url = jsonresp[0]["url"]
                 embed = discord.Embed(
                     title=random.choice(lists.catquotes),
