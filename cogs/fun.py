@@ -68,7 +68,7 @@ class Fun(commands.Cog):
                 await interaction.followup.send(embed=embed)
 
     @cozystuff.error
-    async def meme_error(
+    async def cozystuff_error(
         self, interaction: discord.Interaction, error: AppCommandError
     ) -> None:
         if isinstance(error, app_commands.CommandOnCooldown):
@@ -131,7 +131,43 @@ class Fun(commands.Cog):
                 await interaction.response.send_message(embed=embed)
 
     @astronomy.error
-    async def apod_error(
+    async def astronomy_error(
+        self, interaction: discord.Interaction, error: AppCommandError
+    ) -> None:
+        if isinstance(error, app_commands.CommandOnCooldown):
+            unixtime = int(time.time())
+            totaltime = unixtime + int(error.retry_after)
+            embed = discord.Embed(
+                title="Slow down!",
+                description=f"You can use this command again <t:{totaltime}:R>",
+                color=self.main_color,
+            )
+            await interaction.response.send_message(embed=embed, ephemeral=True)
+
+
+    # COFFEE COMMAND
+    @app_commands.command(
+        name="coffee", description="Pictures of coffee!"
+    )
+    @app_commands.checks.cooldown(1, 5.0)
+    async def coffee(self, interaction: discord.Interaction):
+        url = f"https://coffee.alexflipnote.dev/random.json"
+        headers = {"User-Agent": self.user_agent}
+        async with aiohttp.ClientSession() as session:
+            async with session.get(url, headers=headers) as response:
+                answer = json.loads(await response.text())
+                image_url = answer["hdurl"]
+                embed = discord.Embed(
+                    title=f"Photo of the Day: {answer['title']}",
+                    description="",
+                    color=self.main_color,
+                )
+                embed.set_image(url=image_url)
+                embed.set_footer(text=f"Date: {answer['date']}")
+                await interaction.response.send_message(embed=embed)
+
+    @coffee.error
+    async def coffee_error(
         self, interaction: discord.Interaction, error: AppCommandError
     ) -> None:
         if isinstance(error, app_commands.CommandOnCooldown):
