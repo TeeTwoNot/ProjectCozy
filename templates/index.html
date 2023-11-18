@@ -1,11 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <title>Project Cozy - Home</title>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="title" content="Project Cozy - Home" property="og:title">
+    <meta name="description" content="Project Cozy, a Discord bot." property="og:description">
+    <meta property="og:image" content="{{ url_for('static', filename='img/logo.png') }}">
+    <meta name="url" content="https://projectcozy.xyz" property="og:url">
+    <meta name="theme-color" content="#572A17" property="og:theme-color">
+    <meta name="keywords" content="Discord, Discord Bot, Cozy, Slash Commands, Cozy Bot, Fun Bot, Chill Bot, Cozy Vibes, Chill Vibes" property="og:keywords">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+    <link rel="canonical" href="https://projectcozy.xyz">
 </head>
 <body>
-    SAMPLE HTML DOCUMENT
+    <header>
+        <img id="logo" src="/static/img/logo.png" alt="Project Cozy Logo">
+        <h1>Project Cozy</h1>
+    </header>
+    <main>
+        <section>
+            <h2>Cats</h2>
+            <p>Pictures of cats! They are indeed very adorable.</p>
+            <p>Usage: <code>/cats</code></p>
+        </section>
+        <section>
+            <h2>Cozy Stuff</h2>
+            <p>Explore cozy places and stuff with Reddit posts!</p>
+            <p>Usage: <code>/cozystuff</code></p>
+        </section>
+        <section>
+            <h2>Coffee</h2>
+            <p>Pictures of coffee! Very soothing!</p>
+            <p>Usage: <code>/coffee</code></p>
+        </section>
+        <section>
+            <h2>Bored</h2>
+            <p>Cure your boredom instantly!</p>
+            <p>Usage: <code>/bored</code></p>
+        </section>
+        <section>
+            <h2>Astronomy</h2>
+            <p>Do you find astronomy cool? This command is for you!</p>
+            <p>Usage: <code>/astronomy</code></p>
+        </section>
+        <section>
+            <h2>Advice</h2>
+            <p>Get useful advice!</p>
+            <p>Usage: <code>/bored</code></p>
+        </section>
+    </main>
+    <footer style="padding-top: 20px; padding-bottom: 30px; font-family: monospace; font-size: 15px;">
+        <p class="center">A very temporary website for Project Cozy by <a href="https://teetwonot.com">[TeeTwoNot]</a></p>
+        <p class="center">ChatGPT kindly helped with making this in under 5 minutes. <span class="redtext">#notsponsored</span></p>
+    </footer>
 </body>
 </html>
